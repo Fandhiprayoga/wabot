@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>whatsapp API</title>
+</head>
+<body>
+    <div id="app">
+        <h1>whatsapp API</h1>
+        <p>powered by fandhi</p>
+        <img src="https://static-new.miraheze.org/hololivewiki/9/9b/Kobo_Kanaeru_-_Portrait_01.png" alt="QRCODE" id="qrcode" width="200" height="200"/>
+        <h3>Logs :</h3>
+        <ul class="logs"></ul>
+    </div>
+</body>
+</html>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.3/socket.io.js" integrity="sha512-iWPnCISAd/J+ZacwV2mbNLCaPGRrRo5OS81lKTVPtRg1wGTC20Cfmp5Us5RcbLv42QLdbAWl0MI57yox5VecQg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        let socket = io.connect('http://localhost:8000', {path:'/socket.io'})
+
+        socket.on('message', (msg)=>{
+            console.log(msg)
+            $(".logs").append($('<li>').text(msg));
+        })
+
+        socket.on('qr',(url)=>{
+            $("#qrcode").attr('src', url);
+        })
+    });
+</script>
